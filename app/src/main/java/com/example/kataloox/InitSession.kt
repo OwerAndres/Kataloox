@@ -1,6 +1,8 @@
 package com.example.kataloox
 
 
+import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.BlendMode.Companion.Color
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -35,7 +38,17 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.kataloox.auth.GoogleAuthUiClient
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.compose.rememberLauncherForActivityResult
+import kotlinx.coroutines.launch
+import androidx.compose.runtime.rememberCoroutineScope
 
+
+
+const val RC_SIGN_IN = 1001
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -86,7 +99,9 @@ fun LoginScreen(onNavigateToRegister: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Image(painter = painterResource(R.drawable.logo), contentDescription = "Logo", modifier = Modifier.size(150.dp))
+            Image(painter = painterResource(R.drawable.logo),
+                contentDescription = "Logo",
+                modifier = Modifier.size(150.dp))
 
             Text("Kataloox", fontFamily = agbalumo,
                 fontSize = 48.sp, fontWeight = FontWeight.Bold,
@@ -96,7 +111,7 @@ fun LoginScreen(onNavigateToRegister: () -> Unit) {
                 fontSize = 24.sp,fontWeight = FontWeight.Bold,
                 color = androidx.compose.ui.graphics.Color.White)
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             OutlinedTextField(value = "", onValueChange = {}, label = { Text("Correo",
                 fontFamily = adlfont,
@@ -131,20 +146,47 @@ fun LoginScreen(onNavigateToRegister: () -> Unit) {
                 modifier = Modifier.padding(top = 4.dp)
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(30.dp))
 
             Button(onClick = { /* Lógica sesión */ },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorBoton1)) {
-                Text("Iniciar sesión",fontFamily = adlfont, fontSize = 20.sp, color = androidx.compose.ui.graphics.Color.Black)
+                Text("Iniciar sesión",
+                    fontFamily = adlfont,
+                    fontSize = 20.sp,
+                    color = androidx.compose.ui.graphics.Color.Black)
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(30.dp))
 
             Text("Iniciar sesión con:",fontFamily = adlfont, fontSize = 20.sp,color = androidx.compose.ui.graphics.Color.White)
 
+
+            val context = LocalContext.current
+            val coroutineScope = rememberCoroutineScope()
+            val googleAuthClient = GoogleAuthUiClient(context)
+
+            val launcher = rememberLauncherForActivityResult(
+                contract = ActivityResultContracts.StartActivityForResult()
+            ) { result ->
+                val data = result.data
+                if (result.resultCode == Activity.RESULT_OK && data != null) {
+                    coroutineScope.launch {
+                        val success = googleAuthClient.signInWithIntent(data)
+                        if (success) {
+                            Log.d("Auth", "Inicio de sesión exitoso")
+                        } else {
+                            Log.e("Auth", "Error en el inicio de sesión")
+                        }
+                    }
+                }
+            }
+
             OutlinedButton(
-                onClick = { /* Google Auth */ },
+                onClick = {
+                    val signInIntent = googleAuthClient.signInIntent()
+                    launcher.launch(signInIntent)
+                },
                 colors = ButtonDefaults.outlinedButtonColors(
                     containerColor = colorBoton1)
             ) {
@@ -156,15 +198,15 @@ fun LoginScreen(onNavigateToRegister: () -> Unit) {
                 Text("Continuar con Google",fontFamily = adlfont, fontSize = 20.sp,color = androidx.compose.ui.graphics.Color.Black)
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             TextButton(onClick = onNavigateToRegister) {
                 Text("Regístrate",fontFamily = adlfont, fontSize = 20.sp,color = androidx.compose.ui.graphics.Color.White)
             }
         }
 
-
     }
+
 }
 
 @Preview(showSystemUi = true)

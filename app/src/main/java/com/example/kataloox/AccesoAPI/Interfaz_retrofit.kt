@@ -1,7 +1,6 @@
-package com.example.kataloox
+package com.example.kataloox.AccesoAPI
 
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.POST
 
 
