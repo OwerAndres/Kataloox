@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "185539624006",
+    "project_id": "kataloox-6177b",
+    "storage_bucket": "kataloox-6177b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:185539624006:android:3d9ac354a1ddf729fe9e47",
+        "android_client_info": {
+          "package_name": "com.example.kataloox"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUFAb7bM1DnCyY5dwXwGD2ngwocFLmjco"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
