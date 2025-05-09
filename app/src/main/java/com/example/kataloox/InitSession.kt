@@ -198,7 +198,7 @@ fun LoginScreen(onNavigateToRegister: () -> Unit) {
                 Spacer(modifier = Modifier.width(8.dp))
                 Text("Continuar con Google", fontSize = 20.sp, color = androidx.compose.ui.graphics.Color.Black)
             }
-        /*
+
             mensaje?.let {
                 Text(
                     text = it,
@@ -210,9 +210,9 @@ fun LoginScreen(onNavigateToRegister: () -> Unit) {
                         .fillMaxWidth()
                 )
             }
-            */
+
          
-        /*
+
             // Mostrar nombre y correo después del login
             if (nombreUsuario != null && correoUsuario != null) {
                 Text(
@@ -225,7 +225,7 @@ fun LoginScreen(onNavigateToRegister: () -> Unit) {
                         .fillMaxWidth()
                 )
             }
-        */
+
             Spacer(modifier = Modifier.height(20.dp))
 
             TextButton(onClick = onNavigateToRegister) {
