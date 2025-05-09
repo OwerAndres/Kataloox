@@ -34,6 +34,15 @@ class GoogleAuthUiClient(private val context: Context) {
         return auth.currentUser?.displayName
     }
 
+    fun getCorreoUsuario(): String? {
+        return FirebaseAuth.getInstance().currentUser?.email
+    }
+
+    fun getNombreUsuario(): String? {
+        return FirebaseAuth.getInstance().currentUser?.displayName
+    }
+
+
     suspend fun signInWithIntent(data: Intent): Boolean {
         val task = GoogleSignIn.getSignedInAccountFromIntent(data)
         val account: GoogleSignInAccount = task.result

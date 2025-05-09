@@ -1,11 +1,11 @@
 package com.example.kataloox.AccesoAPI
 
-import com.example.kataloox.ip
+//import com.example.kataloox.ip
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "http://${ip}/Ower/KatalooxAPI/"
+    private const val BASE_URL = "http://192.168.0.137/Ower/KatalooxAPI/"
 
     val apiService: ApiService by lazy {
         Retrofit.Builder()

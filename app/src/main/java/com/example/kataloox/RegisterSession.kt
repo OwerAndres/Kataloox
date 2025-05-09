@@ -172,7 +172,7 @@ fun RegisterScreen(onNavigateToLogin: () -> Unit) {
                 CoroutineScope(Dispatchers.IO).launch {
                         try {
                             val response = RetrofitClient.apiService.registrarUsuario(
-                                RegistroRequest(usuario, correo, contrasena)
+                                RegistroRequest(nombre, usuario, correo, contrasena)
                             )
                             withContext(Dispatchers.Main){
                                 if (response.success){
