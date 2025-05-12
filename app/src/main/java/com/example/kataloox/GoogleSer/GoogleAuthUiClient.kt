@@ -17,7 +17,7 @@ class GoogleAuthUiClient(private val context: Context) {
 
     private val googleSignInClient: GoogleSignInClient by lazy {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("185539624006-1iml09258mtbamj52phm2qc7b3042eap.apps.googleusercontent.com")
+            .requestIdToken("")
             .requestEmail()
             .build()
         GoogleSignIn.getClient(context, gso)
